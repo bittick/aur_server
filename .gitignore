@@ -131,3 +131,6 @@ dmypy.json
 db.sqlite3
 parceServer/migrations/*
 !parceServer/migrations/__init__.py
+
+.idea
+.code
