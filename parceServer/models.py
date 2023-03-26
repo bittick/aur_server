@@ -45,8 +45,8 @@ class CarAd(models.Model):
     color = models.CharField(max_length=30)
     description = models.CharField(max_length=1000, blank=True, null=True)
     images = models.CharField(max_length=1000)
-    create_date = models.DateTimeField(auto_now=True)
-    edit_date = models.DateTimeField(auto_now_add=True)
+    edit_date = models.DateTimeField(auto_now=True)
+    create_date = models.DateTimeField(auto_now_add=True)
 
     def update_object(self, **kwargs):
         for k, v in kwargs.items():
