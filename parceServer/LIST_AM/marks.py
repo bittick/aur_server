@@ -1,4 +1,4 @@
-{
+MARKS = {
     "Acura": "1",
     "Alfa Romeo": "2",
     "Alpina": "156",

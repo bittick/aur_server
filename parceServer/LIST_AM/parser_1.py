@@ -1,10 +1,8 @@
 from .funcks import parse_one_ad, parse_urls_from_page
 import cloudscraper
 from concurrent.futures import ThreadPoolExecutor
-import json
 from loguru import logger
-
-MARKS: dict = json.load(open('parceServer/LIST_AM/marks.json'))
+from .marks import MARKS
 
 
 

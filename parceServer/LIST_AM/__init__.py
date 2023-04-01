@@ -1,1 +1,1 @@
-from .parser_1 import parce_mark, MARKS
+from .main_task import list_am_main_cycle

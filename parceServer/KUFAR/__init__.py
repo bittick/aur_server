@@ -1,0 +1,1 @@
+from .main_task import kufar_main_cycle

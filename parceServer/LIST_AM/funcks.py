@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from bs4 import BeautifulSoup
 from bs4.element import Tag, NavigableString
 from decimal import Decimal
@@ -73,9 +75,9 @@ def _get_color(exterior: Tag) -> str:
                 return value
 
 
-def _parse_price(price_tag: Tag) -> str:
+def _parse_price(price_tag: Tag) -> dict[str, float | Any]:
     if price_tag:
-        currency = price_tag.contents[1]['content']
+        currency = price_tag.contents[1]["content"]
         return {
             'amount': float(price_tag['content']),
             'currency': currency
@@ -97,9 +99,10 @@ def parse_one_ad(html: str | bytes, link: str) -> dict | None:
     try:
         blocks = soup.findAll('div', {'class': 'attr g'})[:3]
         attrs, info, exterior = blocks
-    except Exception as e:
-        logger.warning(f'{link} not enough information ')
-        logger.warning(e)
+    except ValueError as e:
+        pass
+        # logger.warning(f'{link} not enough information ')
+        # logger.warning(e)
         return None
     params = _switch_attrs(attrs)
     params['ad_id'] = re.sub('[https://www.list.am/ru/item/]', '', link)

@@ -4,3 +4,7 @@ loguru~=0.6.0
 celery~=5.2.7
 cloudscraper~=1.2.69
 lxml
+aiohttp~=3.8.4
+asyncio~=3.4.3
+bs4~=0.0.1
+beautifulsoup4~=4.12.0
