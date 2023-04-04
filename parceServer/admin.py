@@ -37,6 +37,6 @@ class CarConditionAdmin(admin.ModelAdmin):
     list_display = ('name',)
 @admin.register(CarAd)
 class CarAdAdmin(admin.ModelAdmin):
-    list_display = ('id', 'brand', 'model', 'price')
+    list_display = ('id', 'brand', 'model', 'price','aggregator', )
     readonly_fields = ('create_date', 'edit_date')
     list_filter = ('aggregator', 'brand', 'condition')

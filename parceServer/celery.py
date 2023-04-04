@@ -7,6 +7,7 @@ from .LALAFO import lalafo_main_cycle
 from .KUFAR import kufar_main_cycle
 import datetime
 
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'aurMain.settings')
 
 app = Celery('PARSING')
@@ -36,6 +37,9 @@ def kufar():
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender: CeleryClass, **kwargs):
+    # kufar.delay()
+    lalafo.delay()
+    # list_am.delay()
     sender.add_periodic_task(
         crontab(minute=1, hour='*'),
         list_am.s(),
@@ -56,5 +60,3 @@ def setup_periodic_tasks(sender: CeleryClass, **kwargs):
         start_time=datetime.datetime.now(),
         name='KUFAR',
     )
-
-

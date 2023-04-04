@@ -1,4 +1,3 @@
-import json
 import aiohttp
 import asyncio
 
@@ -53,21 +52,23 @@ async def parse_ids_from_one_page(mark, session: aiohttp.ClientSession, page=1):
     except ClientPayloadError as e:
         logger.error(e)
 
-async def parse_one_ad(session: aiohttp.ClientSession, id):
+
+async def parse_one_ad(session: aiohttp.ClientSession, ad_id):
     try:
-        async with session.get(f'https://lalafo.kg/api/search/v3/feed/details/{id}?expand=url', headers=HEADER) as resp:
+        async with session.get(f'https://lalafo.kg/api/search/v3/feed/details/{ad_id}?expand=url', headers=HEADER) \
+                as resp:
             if resp.status == 200:
                 data = await resp.json()
                 # logger.info(f'id:{id} status:{resp.status}')
                 return data
     except Exception as e:
-        logger.error(f'id:{id} error:{e}')
+        logger.error(f'id:{ad_id} error:{e}')
 
 
 async def parse_ads(ids, session: aiohttp.ClientSession):
     tasks = []
-    for id in ids:
-        tasks.append(asyncio.ensure_future(parse_one_ad(session, id)))
+    for ad_id in ids:
+        tasks.append(asyncio.ensure_future(parse_one_ad(session, ad_id)))
 
     data = await asyncio.gather(*tasks)
     return [i for i in data if i]

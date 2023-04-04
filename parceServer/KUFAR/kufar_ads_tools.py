@@ -1,11 +1,7 @@
-import json
-import re
-
-from loguru import logger
-
-
 def __parce_ad_images(images):
-    return [f'https://yams.kufar.by/api/v1/kufar-ads/images/{img["id"][:2]}/{img["id"]}.jpg?rule=gallery' for img in images]
+    return [
+        f'https://yams.kufar.by/api/v1/kufar-ads/images/{img["id"][:2]}/{img["id"]}.jpg?rule=gallery' for img in images
+    ]
 
 
 def __parse_ad_parameters(ad_parameters, mark_name):
@@ -55,7 +51,7 @@ def parse_ad(ad, mark_name):
     res_params['ad_id'] = ad['ad_id']
     res_params['link'] = ad['ad_link']
     res_params['price'] = {
-        'amount' : float(ad['price_usd']),
+        'amount': float(ad['price_usd']),
         'currency': 'BYN',
     }
     res_params['title'] = ad['subject']

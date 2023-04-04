@@ -1,10 +1,7 @@
-from typing import Dict, Any
-
+from typing import Any
 from bs4 import BeautifulSoup
 from bs4.element import Tag, NavigableString
-from decimal import Decimal
 import re
-from loguru import logger
 
 
 def parse_urls_from_page(html: str | bytes) -> (list[str] | str | None):

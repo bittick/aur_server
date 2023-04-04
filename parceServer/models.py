@@ -77,7 +77,7 @@ class Region(models.Model):
 class Area(models.Model):
     name = models.CharField(primary_key=True, max_length=50)
     country = models.ForeignKey(to=Country, on_delete=models.CASCADE)
-    region = models.ForeignKey(to=Region, on_delete=models.CASCADE)
+    region = models.ForeignKey(to=Region, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -91,8 +91,8 @@ class Color(models.Model):
 
 
 class CarAd(models.Model):
-    __attrs = ('ad_id', 'link', 'aggregator', 'brand', 'price', 'model', 'production_date', 'mileage', 'cars_engine'
-                                                                                                       'engine_capacity',
+    __attrs = ('ad_id', 'link', 'aggregator', 'brand', 'price', 'model', 'production_date',
+               'mileage', 'cars_engine', 'engine_capacity',
                'cars_gearbox', 'cars_type', 'cars_drive', 'condition', 'country', 'region'
                                                                                   'area', 'title', 'color',
                'description', 'images')
@@ -101,10 +101,11 @@ class CarAd(models.Model):
                   'condition': CarCondition, 'country': Country, 'color': Color}
     __special_kf_attrs = {'model': CarModel, 'region': Region, 'area': Area}
     __special_non_kf_attrs = {'price', }
-    __optional_attributes = {'area', 'color', 'description', 'condition', 'engine_capacity', 'cars_drive', 'cars_type',
+    __optional_attributes = {'region', 'area', 'color', 'description', 'condition', 'engine_capacity', 'cars_drive',
+                             'cars_type',
                              'cars_gearbox', 'mileage'}
     __required_attrs = {'link', 'aggregator', 'price', 'production_date', 'cars_engine', 'condition', 'country',
-                        'region', 'title', 'images'}
+                        'title', 'images'}
     __other_attrs = (
         'link',  # str
         'production_date',  # int
@@ -136,12 +137,12 @@ class CarAd(models.Model):
     cars_drive = models.ForeignKey(to=CarDrive, on_delete=models.CASCADE, blank=True, null=True)
     condition = models.ForeignKey(to=CarCondition, on_delete=models.CASCADE, blank=True, null=True)
     country = models.ForeignKey(to=Country, on_delete=models.CASCADE)
-    region = models.ForeignKey(to=Region, on_delete=models.CASCADE)
+    region = models.ForeignKey(to=Region, on_delete=models.CASCADE, null=True, blank=True)
     area = models.ForeignKey(to=Area, on_delete=models.CASCADE, blank=True, null=True)
-    title = models.CharField(max_length=400)
+    title = models.TextField(max_length=400)
     color = models.ForeignKey(to=Color, on_delete=models.CASCADE, blank=True, null=True)
-    description = models.CharField(max_length=1000, blank=True, null=True)
-    images = models.CharField(max_length=1000)
+    description = models.TextField(max_length=1000, blank=True, null=True)
+    images = models.JSONField()
     edit_date = models.DateTimeField(auto_now=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
@@ -155,7 +156,7 @@ class CarAd(models.Model):
             case 'price':
                 self.__setup_price(*ags)
 
-    def __setup_price(self, price_data: dict) -> float | int:
+    def __setup_price(self, price_data: dict):
         currency_date = {
             'KGS': 0.011,
             'USD': 1,
@@ -171,7 +172,6 @@ class CarAd(models.Model):
         self.price = round(currency_date.get(currency) * amount, 2)
 
     def __setup_fk_attr(self, field, arg):
-        # print(f'fild, arg na vod:{field} {arg}')
         if not arg and field not in self.__optional_attributes:
             raise AdSetUpError(f'Field {field} not set')
         if arg is None:
@@ -209,7 +209,7 @@ class CarAd(models.Model):
 
     def __setup_region(self, region_name):
         if not region_name:
-            raise AdSetUpError('Region not set')
+            return None
         region_model = Region.objects.filter(name=region_name)
         if not region_model:
             region_model = Region.objects.create(name=region_name, country=self.country)
@@ -250,7 +250,7 @@ class CarAd(models.Model):
         for field, arg in special_fk_fields.items():
             self.__setup__special_kf_attrs(field, arg)
         self.__setup_other_attrs(**other_fields)
-        pass
+        self.save()
         return self
 
     # @classmethod

@@ -46,7 +46,7 @@ def parse_data_from_ad(ad, mark_name):
         return None
     res_params = __parse_ad_parameters(params)
 
-    res_params['ad_id'] = ad['id']
+    res_params['ad_id'] = ad.get('id')
     res_params['link'] = f"https://lalafo.kg{ad['url']}"
     res_params['price'] = {
         'amount': ad['price'],

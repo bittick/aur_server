@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'parceServer'
+    'django_filters',
+    'parceServer',
 ]
 
 MIDDLEWARE = [
@@ -126,10 +127,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-    ]
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
-DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = '6379'

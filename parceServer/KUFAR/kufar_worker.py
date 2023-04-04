@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 
 async def parse_pages(mark, session: aiohttp.ClientSession, model=None, token=None):
-    URL = 'https://cre-api-v2.kufar.by/items-search/v1/engine/v1/search/rendered-paginated'
-    async with session.get(URL, params=create_params(mark, model, token)) as resp:
+    url = 'https://cre-api-v2.kufar.by/items-search/v1/engine/v1/search/rendered-paginated'
+    async with session.get(url, params=create_params(mark, model, token)) as resp:
         if resp.status != 200:
             logger.warning(
                 f'FAILED REQUEST {resp.url}\n Status code: {resp.status}\n Body: {resp.text}')
