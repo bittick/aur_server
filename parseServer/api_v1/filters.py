@@ -1,5 +1,5 @@
 import django_filters
-from parceServer.models import CarAd
+from parseServer.models import CarAd, Area, Region, Brand
 
 
 class CarAdFilter(django_filters.FilterSet):
@@ -33,3 +33,25 @@ class CarAdFilter(django_filters.FilterSet):
                   'cars_engine', 'engine_capacity_min', 'engine_capacity_max', 'cars_gearbox',
                   'cars_type', 'cars_drive', 'condition', 'country', 'region', 'area',
                   'color', 'create_date_min', 'create_date_max']
+
+
+# class BrandFilter(django_filters.FilterSet):
+#     class Meta:
+#         model = Brand
+#         fields = ['name']
+
+class RegionFilter(django_filters.FilterSet):
+    country = django_filters.CharFilter(lookup_expr='exact')
+
+    class Meta:
+        model = Region
+        fields = ['country']
+
+
+class AreaFilter(django_filters.FilterSet):
+    country = django_filters.CharFilter(lookup_expr='exact')
+    region = django_filters.CharFilter(lookup_expr='exact')
+
+    class Meta:
+        model = Area
+        fields = ['country', 'region']

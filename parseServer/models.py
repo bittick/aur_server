@@ -1,5 +1,6 @@
 from django.db import models
 from .models_exceptions import AdSetUpError
+from datetime import datetime
 
 
 class Aggregator(models.Model):
@@ -113,15 +114,8 @@ class CarAd(models.Model):
         'engine_capacity',  # float
         'title',  # str
         'description',  # str
-        'images',  # str
+        'images',  # json
     )
-
-    @classmethod
-    def _validate_fields(cls, ad_data: dict):
-        attrs_set = {key for key, value in ad_data.items()}
-        if attrs_set.intersection(cls.__required_attrs) == cls.__required_attrs:
-            return ad_data['price'].get('amount') and ad_data['price'].get('currency')
-
     ad_id = models.IntegerField(unique=True)
     link = models.CharField(max_length=150)
     aggregator = models.ForeignKey(to=Aggregator, on_delete=models.CASCADE)
@@ -146,6 +140,12 @@ class CarAd(models.Model):
     edit_date = models.DateTimeField(auto_now=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
+    @classmethod
+    def _validate_fields(cls, ad_data: dict):
+        attrs_set = {key for key, value in ad_data.items()}
+        if attrs_set.intersection(cls.__required_attrs) == cls.__required_attrs:
+            return ad_data['price'].get('amount') and ad_data['price'].get('currency')
+
     def update_object(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -157,7 +157,7 @@ class CarAd(models.Model):
                 self.__setup_price(*ags)
 
     def __setup_price(self, price_data: dict):
-        currency_date = {
+        currency_data = {
             'KGS': 0.011,
             'USD': 1,
             'BYN': 0.40,
@@ -169,7 +169,7 @@ class CarAd(models.Model):
         amount = price_data.get('amount')
         if not currency or not amount:
             raise AdSetUpError('Not enough price data ')
-        self.price = round(currency_date.get(currency) * amount, 2)
+        self.price = round(currency_data.get(currency) * amount, 2)
 
     def __setup_fk_attr(self, field, arg):
         if not arg and field not in self.__optional_attributes:
@@ -234,10 +234,13 @@ class CarAd(models.Model):
         if not cls._validate_fields(ad_data):
             return None
         db_ad = CarAd.objects.filter(ad_id=ad_data['ad_id'])
+
         if not db_ad:
             db_ad = CarAd(ad_id=ad_data['ad_id'])
         else:
             db_ad = db_ad[0]
+            db_ad.save()
+            return None
         db_ad._save_ad(ad_data)
 
     def _save_ad(self, ad_data):
@@ -252,39 +255,3 @@ class CarAd(models.Model):
         self.__setup_other_attrs(**other_fields)
         self.save()
         return self
-
-    # @classmethod
-    # def save_ads(cls, ads_data: list):
-    #     new_models = []
-    #     models_to_update = []
-    #     for ad_data in ads_data:
-    #         if not cls._validate_fields(ad_data):
-    #             continue
-    #         db_ad = CarAd.objects.filter(ad_id=ad_data['ad_id'])
-    #         if not db_ad:
-    #             new_models.append(
-    #                 CarAd(ad_id=ad_data['ad_id'])._setup_ad(ad_data)
-    #             )
-    #         else:
-    #             models_to_update.append(
-    #                 db_ad[0]._setup_ad(ad_data)
-    #             )
-    #     cls.objects.bulk_create(new_models)
-    #     cls.objects.bulk_update(models_to_update, cls.__attrs)
-
-    # def _setup_ad(self, ad_data):
-    #     try:
-    #         fk_fields = {key: ad_data.get(key) for key, value in self.__fk_attrs.items()}
-    #         # print(fk_fields)
-    #         special_fk_fields = {key: ad_data.get(key) for key, value in self.__special_kf_attrs.items()}
-    #         other_fields = {key: ad_data.get(key) for key in self.__other_attrs}
-    #         for field, arg in fk_fields.items():
-    #             self.__setup_fk_attr(field, arg)
-    #         self.__setup_price(ad_data.get('price'))
-    #         # print(special_fk_fields)
-    #         for field, arg in special_fk_fields.items():
-    #             self.__setup__special_kf_attrs(field, arg)
-    #         self.__setup_other_attrs(**other_fields)
-    #     except AdSetUpError:
-    #         pass
-    #     return self

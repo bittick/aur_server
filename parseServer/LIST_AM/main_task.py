@@ -20,5 +20,5 @@ def list_am_main_cycle():
 
 
 def save_data(ad):
-    from parceServer.models import CarAd
+    from parseServer.models import CarAd
     CarAd.save_ad(ad)

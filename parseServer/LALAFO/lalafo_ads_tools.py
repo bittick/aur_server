@@ -57,6 +57,6 @@ def parse_data_from_ad(ad, mark_name):
     res_params['country'] = 'Киргизстан'
     res_params['images'] = __parse_ad_images(ad['images'])
     res_params['aggregator'] = 'lalafo.kg'
-    res_params['region'] = ad['city']
+    res_params['area'] = ad['city']
     res_params['brand'] = mark_name
     return res_params
