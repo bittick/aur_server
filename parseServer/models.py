@@ -160,7 +160,7 @@ class CarAd(models.Model):
         currency_data = {
             'KGS': 0.011,
             'USD': 1,
-            'BYN': 0.40,
+            'BYN': 0.34,
             'AMD': 0.0026,
             'RUB': 0.013,
             'EUR': 0.92,

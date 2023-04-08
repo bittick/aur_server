@@ -99,14 +99,14 @@ class CountryDetail(RetrieveAPIView):
         country = self.get_object()
         serializer_context = self.get_serializer_context()
         regions = RegionSerializer(country.region_set.all(), many=True, context=serializer_context).data
-        area_serializer = AreaListSerializer(country.area_set.filter(region__isnull=True), many=True, context=serializer_context)
+        area_serializer = AreaListSerializer(country.area_set.filter(region__isnull=True), many=True,
+                                             context=serializer_context)
         areas_without_region = area_serializer.data
         serializer = self.get_serializer(country)
         data = serializer.data
         data['regions'] = regions
         data['areas_without_region'] = areas_without_region
         return Response(data)
-
 
 
 @api_view(['GET'])

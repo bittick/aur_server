@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import *
 
 
-# Register your models here.
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -32,11 +31,29 @@ class RegionAdmin(admin.ModelAdmin):
 class AreaAdmin(admin.ModelAdmin):
     list_display = ('name', 'country', 'region')
 
+
 @admin.register(CarCondition)
 class CarConditionAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+
+@admin.register(Color)
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+@admin.register(CarDrive)
+class CarDriveAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+@admin.register(Gearbox)
+class GearboxAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
 @admin.register(CarAd)
 class CarAdAdmin(admin.ModelAdmin):
-    list_display = ('id', 'brand', 'model', 'price','aggregator', )
+    list_display = ('id', 'brand', 'model', 'price', 'aggregator',)
     readonly_fields = ('create_date', 'edit_date')
     list_filter = ('aggregator', 'brand', 'condition')
