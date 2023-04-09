@@ -14,7 +14,6 @@ def save_data(ad):
         logger.error(f'{e}\n{ad["link"]}')
     except Exception as e:
         logger.error(f'{e}\n{ad["link"]}')
-        raise Exception
 
 
 def lalafo_main_cycle():
