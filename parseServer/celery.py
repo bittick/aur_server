@@ -5,8 +5,8 @@ from celery import Celery
 from .LIST_AM import list_am_main_cycle
 from .LALAFO import lalafo_main_cycle
 from .KUFAR import kufar_main_cycle
+from .KOLESA_KZ import kolesa_kz_main_cycle
 import datetime
-
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'aurMain.settings')
 
@@ -35,11 +35,23 @@ def kufar():
     return 'COMPLITTED'
 
 
+@app.task()
+def kolesa_kz():
+    import time
+    stat = time.time()
+    kolesa_kz_main_cycle()
+    finish = time.time()
+    f = open('timing.txt', 'w')
+    f.write(f'start time: {stat}\nfinish time: {finish}\nworking time: {str(finish-stat)}')
+    return 'COMPLITTED'
+
+
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender: CeleryClass, **kwargs):
     # kufar.delay()
-    lalafo.delay()
+    # lalafo.delay()
     # list_am.delay()
+    kolesa_kz.delay()
     sender.add_periodic_task(
         crontab(minute=1, hour='*'),
         list_am.s(),

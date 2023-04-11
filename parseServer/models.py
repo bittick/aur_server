@@ -164,6 +164,7 @@ class CarAd(models.Model):
             'AMD': 0.0026,
             'RUB': 0.013,
             'EUR': 0.92,
+            'KZT': 0.0022,
         }
         currency = price_data.get('currency')
         amount = price_data.get('amount')
@@ -232,6 +233,7 @@ class CarAd(models.Model):
     @classmethod
     def save_ad(cls, ad_data: dict):
         if not cls._validate_fields(ad_data):
+            print(f'ad not valid {ad_data.get("link")}')
             return None
         db_ad = CarAd.objects.filter(ad_id=ad_data['ad_id'])
 

@@ -37,7 +37,7 @@ def parse_one_ad_link(args: list[str | cloudscraper.CloudScraper]) -> dict | Non
     return ad_params
 
 
-def parce_mark(mark_id: int | str, session: cloudscraper.CloudScraper) -> list[dict | None]:
+def parse_mark(mark_id: int | str, session: cloudscraper.CloudScraper) -> list[dict | None]:
     res = get_ads_links(mark_id, session, 10)
     args = [(i, session) for i in res]
     with ThreadPoolExecutor(max_workers=10) as executor:
