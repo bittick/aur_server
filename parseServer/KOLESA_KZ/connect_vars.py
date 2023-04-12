@@ -1,11 +1,11 @@
-PROXY = {'http': 'http://usrg41c029l:pwd6ojkqx73eg@185.148.37.218:10222',
-         'https': 'http://usrg41c029l:pwd6ojkqx73eg@185.148.37.218:10222'}
+PROXY = {'http': 'http://byQgYy:YH5YryDhYHyT@cproxy.site:16589',
+         'https': 'http://byQgYy:YH5YryDhYHyT@cproxy.site:16589'}
 
-REFRESH_LINK = 'http://185.148.37.218:10222/api/reconnect?apiToken=19be9789791d407aaad33d143263188b'
+REFRESH_LINK = 'http://81.200.155.214/reload.html?proxy_key=78a975570534c94c72e37559dd740763'
 
-TIMEOUT = 18
+TIMEOUT = 5
 
-PAGE_LIMIT = 20
+PAGE_LIMIT = 1
 
 HEADER = {
     'ssaid': 'b8ed24f0-a1c2-11ed-9d6d-3fb07b1b8e92',

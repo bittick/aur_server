@@ -1,5 +1,6 @@
 Django~=4.1.7
 djangorestframework~=3.14.0
+psycopg2~=2.9.6
 loguru~=0.6.0
 celery~=5.2.7
 redis==4.5.4

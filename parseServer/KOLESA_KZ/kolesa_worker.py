@@ -14,20 +14,20 @@ def refresh_proxy(session: requests.Session):
     global refresh_mutex
     # Пытаемся захватить мьютекс
     if refresh_mutex.acquire(blocking=False):
+        refresh_link = REFRESH_LINK
+        logger.debug('trying to refresh proxy')
         try:
-            refresh_link = REFRESH_LINK
-            try:
-                r = session.get(refresh_link, timeout=15)
-                return r.status_code
-            except requests.exceptions.Timeout:
-                refresh_proxy(session=session)
-            time.sleep(5)
+            r = session.get(refresh_link, timeout=8)
+            return r.status_code
+        except requests.exceptions.Timeout:
+            refresh_proxy(session=session)
+            time.sleep(3)
         finally:
             # Освобождаем мьютекс через 10 секунд
             threading.Timer(10, refresh_mutex.release).start()
     else:
         # Мьютекс уже занят, ждем его освобождения
-        time.sleep(5)
+        time.sleep(3)
         return None
 
 

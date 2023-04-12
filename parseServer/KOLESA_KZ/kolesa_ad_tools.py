@@ -19,6 +19,8 @@ def __parse_raw_params(raw_params: dict):
                 tmp = re.sub('[\s+| ) ]', '', value).split('(')
                 res['engine_capacity'] = tmp[0]
                 res['cars_engine'] = tmp[1]
+            case 'Пробег':
+                res['mileage'] = int(re.sub(r'\D+', '', value))
             case 'Коробка передач':
                 res['cars_gearbox'] = value
             case 'Привод':

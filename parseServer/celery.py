@@ -37,12 +37,12 @@ def kufar():
 
 @app.task()
 def kolesa_kz():
-    import time
-    stat = time.time()
+    from datetime import datetime
+    start = datetime.now()
     kolesa_kz_main_cycle()
-    finish = time.time()
+    finish = datetime.now()
     f = open('timing.txt', 'w')
-    f.write(f'start time: {stat}\nfinish time: {finish}\nworking time: {str(finish-stat)}')
+    f.write(f'start time: {start}\nfinish time: {finish}\nworking time: {str(finish-start)}')
     return 'COMPLITTED'
 
 
@@ -52,23 +52,23 @@ def setup_periodic_tasks(sender: CeleryClass, **kwargs):
     # lalafo.delay()
     # list_am.delay()
     kolesa_kz.delay()
-    # sender.add_periodic_task(
-    #     crontab(minute=1, hour='*'),
-    #     list_am.s(),
-    #     start_time=datetime.datetime.now(),
-    #     name='LIST.AM',
-    #
-    # )
-    # sender.add_periodic_task(
-    #     crontab(minute=20, hour='*'),
-    #     lalafo.s(),
-    #     start_time=datetime.datetime.now(),
-    #     name='LALAFO',
-    #
-    # )
-    # sender.add_periodic_task(
-    #     crontab(minute=40, hour='*'),
-    #     kufar.s(),
-    #     start_time=datetime.datetime.now(),
-    #     name='KUFAR',
-    # )
+    sender.add_periodic_task(
+        crontab(minute=1, hour='*'),
+        list_am.s(),
+        start_time=datetime.datetime.now(),
+        name='LIST.AM',
+
+    )
+    sender.add_periodic_task(
+        crontab(minute=20, hour='*'),
+        lalafo.s(),
+        start_time=datetime.datetime.now(),
+        name='LALAFO',
+
+    )
+    sender.add_periodic_task(
+        crontab(minute=40, hour='*'),
+        kufar.s(),
+        start_time=datetime.datetime.now(),
+        name='KUFAR',
+    )

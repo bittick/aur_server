@@ -120,7 +120,7 @@ class CarAd(models.Model):
     link = models.CharField(max_length=150)
     aggregator = models.ForeignKey(to=Aggregator, on_delete=models.CASCADE)
     brand = models.ForeignKey(to=Brand, on_delete=models.CASCADE)
-    price = models.FloatField()
+    price = models.IntegerField()
     model = models.ForeignKey(to=CarModel, on_delete=models.CASCADE)
     production_date = models.IntegerField()
     mileage = models.IntegerField(blank=True, null=True)
@@ -170,7 +170,7 @@ class CarAd(models.Model):
         amount = price_data.get('amount')
         if not currency or not amount:
             raise AdSetUpError('Not enough price data ')
-        self.price = round(currency_data.get(currency) * amount, 2)
+        self.price = int(round(currency_data.get(currency) * amount, 1))
 
     def __setup_fk_attr(self, field, arg):
         if not arg and field not in self.__optional_attributes:
@@ -233,7 +233,7 @@ class CarAd(models.Model):
     @classmethod
     def save_ad(cls, ad_data: dict):
         if not cls._validate_fields(ad_data):
-            print(f'ad not valid {ad_data.get("link")}')
+            # print(f'ad not valid {ad_data.get("link")}')
             return None
         db_ad = CarAd.objects.filter(ad_id=ad_data['ad_id'])
 
