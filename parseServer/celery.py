@@ -52,23 +52,23 @@ def setup_periodic_tasks(sender: CeleryClass, **kwargs):
     # lalafo.delay()
     # list_am.delay()
     kolesa_kz.delay()
-    sender.add_periodic_task(
-        crontab(minute=1, hour='*'),
-        list_am.s(),
-        start_time=datetime.datetime.now(),
-        name='LIST.AM',
-
-    )
-    sender.add_periodic_task(
-        crontab(minute=20, hour='*'),
-        lalafo.s(),
-        start_time=datetime.datetime.now(),
-        name='LALAFO',
-
-    )
-    sender.add_periodic_task(
-        crontab(minute=40, hour='*'),
-        kufar.s(),
-        start_time=datetime.datetime.now(),
-        name='KUFAR',
-    )
+    # sender.add_periodic_task(
+    #     crontab(minute=1, hour='*'),
+    #     list_am.s(),
+    #     start_time=datetime.datetime.now(),
+    #     name='LIST.AM',
+    #
+    # )
+    # sender.add_periodic_task(
+    #     crontab(minute=20, hour='*'),
+    #     lalafo.s(),
+    #     start_time=datetime.datetime.now(),
+    #     name='LALAFO',
+    #
+    # )
+    # sender.add_periodic_task(
+    #     crontab(minute=40, hour='*'),
+    #     kufar.s(),
+    #     start_time=datetime.datetime.now(),
+    #     name='KUFAR',
+    # )
