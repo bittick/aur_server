@@ -1,6 +1,6 @@
 import time
 import requests
-from .kolesa_ad_tools import parse_one_html
+from .kolesa_ads_tools import parse_one_html
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from loguru import logger

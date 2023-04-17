@@ -1,7 +1,8 @@
-PROXY = {'http': 'http://byQgYy:YH5YryDhYHyT@cproxy.site:16589',
-         'https': 'http://byQgYy:YH5YryDhYHyT@cproxy.site:16589'}
+import os
+PROXY = {'http': os.getenv('PROXY'),
+         'https': os.getenv('PROXY')}
 
-REFRESH_LINK = 'http://81.200.155.214/reload.html?proxy_key=78a975570534c94c72e37559dd740763'
+REFRESH_LINK = os.getenv('PROXY_REFRESH_LINK')
 
 TIMEOUT = 5
 
