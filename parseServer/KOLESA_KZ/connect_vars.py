@@ -1,7 +1,7 @@
-PROXY = {'http': 'http://byQgYy:YH5YryDhYHyT@cproxy.site:16589',
-         'https': 'http://byQgYy:YH5YryDhYHyT@cproxy.site:16589'}
+PROXY = {'http': 'http://JbHjQG:4OkkU7d24WiW@vo.mobileproxy.space:59083',
+         'https': 'http://JbHjQG:4OkkU7d24WiW@vo.mobileproxy.space:59083'}
 
-REFRESH_LINK = 'http://81.200.155.214/reload.html?proxy_key=78a975570534c94c72e37559dd740763'
+REFRESH_LINK = 'https://mobileproxy.space/reload.html?proxy_key=49a8e8800a31a05c81c6a88006abe9fd'
 
 TIMEOUT = 5
 

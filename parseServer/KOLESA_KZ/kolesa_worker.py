@@ -41,7 +41,7 @@ def parse_links_from_one_page(args):
             'user-agent': 'Opera/12.0(Windows NT 5.1;U;en)Presto/22.9.168 Version/12.00'}, proxies=PROXY,
                            timeout=TIMEOUT)
     except requests.exceptions.RequestException as e:
-        # logger.error(e)
+        logger.error(e)
         status = refresh_proxy(session)
         if status:
             logger.debug(f'REFRESHING PROXY: status - {status}')
@@ -109,9 +109,9 @@ def get_mark_page_count(mark, session: requests.Session):
     }
     url = f'https://kolesa.kz/a/ajax-get-search-nb-results{mark}'
     try:
-        resp = session.get(url, headers=header, proxies=PROXY)
+        resp = session.get(url, headers=header, proxies=PROXY, timeout=TIMEOUT)
     except requests.exceptions.RequestException as e:
-        # logger.error(e)
+        logger.error(e)
         status = refresh_proxy(session)
         if status:
             logger.debug(f'REFRESHING PROXY: status - {status}')

@@ -1,0 +1,117 @@
+[I 230418 01:30:07 command:162] Visit me at http://0.0.0.0:5555
+[I 230418 01:30:07 command:170] Broker: redis://localhost:6379/0
+[I 230418 01:30:07 command:171] Registered tasks: 
+    ['celery.accumulate',
+     'celery.backend_cleanup',
+     'celery.chain',
+     'celery.chord',
+     'celery.chord_unlock',
+     'celery.chunks',
+     'celery.group',
+     'celery.map',
+     'celery.starmap',
+     'parseServer.celery.kolesa_kz',
+     'parseServer.celery.kufar',
+     'parseServer.celery.lalafo',
+     'parseServer.celery.list_am']
+[W 230418 01:30:07 command:177] Running without authentication
+[I 230418 01:30:07 mixins:225] Connected to redis://localhost:6379/0
+ 
+ -------------- celery@ThinkPadLX v5.2.7 (dawn-chorus)
+--- ***** ----- 
+-- ******* ---- Linux-5.19.0-38-generic-x86_64-with-glibc2.35 2023-04-18 01:30:07
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         PARSING:0x7ff93b874f10
+- ** ---------- .> transport:   redis://localhost:6379/0
+- ** ---------- .> results:     disabled://
+- *** --- * --- .> concurrency: 8 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . parseServer.celery.kolesa_kz
+  . parseServer.celery.kufar
+  . parseServer.celery.lalafo
+  . parseServer.celery.list_am
+
+Watching for file changes with StatReloader
+[2023-04-18 01:30:08,266: INFO/MainProcess] Connected to redis://localhost:6379/0
+[2023-04-18 01:30:08,273: INFO/MainProcess] mingle: searching for neighbors
+[W 230418 01:30:08 inspector:42] Inspect method active_queues failed
+[W 230418 01:30:08 inspector:42] Inspect method stats failed
+[W 230418 01:30:08 inspector:42] Inspect method reserved failed
+[W 230418 01:30:08 inspector:42] Inspect method conf failed
+[W 230418 01:30:08 inspector:42] Inspect method scheduled failed
+[W 230418 01:30:08 inspector:42] Inspect method active failed
+[W 230418 01:30:08 inspector:42] Inspect method registered failed
+[W 230418 01:30:08 inspector:42] Inspect method revoked failed
+[2023-04-18 01:30:09,280: INFO/MainProcess] mingle: all alone
+[2023-04-18 01:30:09,287: WARNING/MainProcess] /home/mikhail/Desktop/aur_AUTO_server/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+[2023-04-18 01:30:09,287: INFO/MainProcess] celery@ThinkPadLX ready.
+[2023-04-18 01:30:09,302: INFO/MainProcess] Task parseServer.celery.kolesa_kz[3f45b11b-c7ab-4955-a118-52cdebeae197] received
+[2023-04-18 01:30:09,303: INFO/MainProcess] Task parseServer.celery.kolesa_kz[a9e1d482-5954-41fb-8935-9485bb9fef08] received
+2023-04-18 01:30:09.304 | INFO     | parseServer.KOLESA_KZ.main_task:kolesa_kz_main_cycle:11 - processing: Audi
+2023-04-18 01:30:09.304 | INFO     | parseServer.KOLESA_KZ.main_task:kolesa_kz_main_cycle:11 - processing: Audi
+[2023-04-18 01:30:09,860: INFO/Beat] beat: Starting...
+[2023-04-18 01:30:12,797: INFO/MainProcess] Events of group {task} enabled by remote.
+2023-04-18 01:30:14.336 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:30:14.336 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:refresh_proxy:18 - trying to refresh proxy
+2023-04-18 01:30:14.356 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:30:14.357 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:refresh_proxy:18 - trying to refresh proxy
+2023-04-18 01:30:14.612 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:117 - REFRESHING PROXY: status - 200
+2023-04-18 01:30:19.692 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:30:27.768 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:30:27.769 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:refresh_proxy:18 - trying to refresh proxy
+2023-04-18 01:30:33.572 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:30:41.636 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:30:41.636 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:refresh_proxy:18 - trying to refresh proxy
+2023-04-18 01:30:48.101 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:parse_links_from_one_page:49 - https://kolesa.kz/cars/audi/?sort_by=add_date-asc
+[18/Apr/2023 01:30:48] "GET /admin/ HTTP/1.1" 200 9238
+[18/Apr/2023 01:30:48] "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+[18/Apr/2023 01:30:48] "GET /static/admin/css/base.css HTTP/1.1" 200 20344
+[18/Apr/2023 01:30:48] "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2619
+[18/Apr/2023 01:30:48] "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+[18/Apr/2023 01:30:48] "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3763
+[18/Apr/2023 01:30:48] "GET /static/admin/css/responsive.css HTTP/1.1" 200 18854
+[18/Apr/2023 01:30:48] "GET /static/admin/css/fonts.css HTTP/1.1" 304 0
+2023-04-18 01:30:48.399 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:parse_mark:128 - ['/a/show/151188174', '/a/show/151027005', '/a/show/125657382', '/a/show/151618141', '/a/show/151618219', '/a/show/148782333', '/a/show/151618433', '/a/show/151618509', '/a/show/151613405', '/a/show/151618674', '/a/show/119755942', '/a/show/151618828', '/a/show/151619006', '/a/show/148824341', '/a/show/150222287', '/a/show/145497642', '/a/show/150959734', '/a/show/142771304', '/a/show/151619362', '/a/show/144483143']
+[18/Apr/2023 01:30:48] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+[18/Apr/2023 01:30:48] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+[18/Apr/2023 01:30:48] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 85692
+[18/Apr/2023 01:30:48] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184
+[18/Apr/2023 01:30:48] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876
+Not Found: /favicon.ico
+[18/Apr/2023 01:30:48] "GET /favicon.ico HTTP/1.1" 404 2262
+2023-04-18 01:30:49.067 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151027005 200
+2023-04-18 01:30:49.668 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/119755942 200
+2023-04-18 01:30:50.278 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151618828 200
+2023-04-18 01:30:50.922 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151619006 200
+2023-04-18 01:30:50.982 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/148782333 200
+2023-04-18 01:30:51.027 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/125657382 200
+2023-04-18 01:30:51.047 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151618433 200
+2023-04-18 01:30:51.053 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151188174 200
+2023-04-18 01:30:51.101 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151618141 200
+2023-04-18 01:30:51.131 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151618674 200
+2023-04-18 01:30:51.142 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151618219 200
+2023-04-18 01:30:51.146 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151618509 200
+2023-04-18 01:30:51.179 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/151613405 200
+2023-04-18 01:30:51.357 | ERROR    | parseServer.KOLESA_KZ.kolesa_ad_tools:parse_one_html:88 - 'title'
+2023-04-18 01:30:51.625 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/148824341 200
+2023-04-18 01:30:51.640 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:83 - https://kolesa.kz/a/show/150222287 200
+2023-04-18 01:30:56.244 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:refresh_proxy:18 - trying to refresh proxy
+2023-04-18 01:31:00.908 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:31:01.138 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:91 - REFRESHING PROXY: status - 200
+2023-04-18 01:31:08.972 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:31:08.972 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:refresh_proxy:18 - trying to refresh proxy
+2023-04-18 01:31:12.448 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:refresh_proxy:18 - trying to refresh proxy
+2023-04-18 01:31:12.550 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:91 - REFRESHING PROXY: status - 200
+2023-04-18 01:31:25.660 | DEBUG    | parseServer.KOLESA_KZ.kolesa_worker:refresh_proxy:18 - trying to refresh proxy
+2023-04-18 01:31:28.200 | ERROR    | parseServer.KOLESA_KZ.kolesa_worker:get_mark_page_count:114 - HTTPSConnectionPool(host='kolesa.kz', port=443): Max retries exceeded with url: /a/ajax-get-search-nb-results/cars/audi/ (Caused by ProxyError('Cannot connect to proxy.', TimeoutError('timed out')))
+2023-04-18 01:31:28.561 | WARNING  | parseServer.KOLESA_KZ.kolesa_worker:get_one_ad:85 - http://192.168.230.1/html/index.html?url=kolesa.kz 403

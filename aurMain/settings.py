@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'celery',
+    'flower',
     'django_filters',
     'parseServer',
 ]
