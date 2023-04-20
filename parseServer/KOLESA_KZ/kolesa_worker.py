@@ -109,9 +109,9 @@ def get_mark_page_count(mark, session: requests.Session):
     }
     url = f'https://kolesa.kz/a/ajax-get-search-nb-results{mark}'
     try:
-        resp = session.get(url, headers=header, proxies=PROXY)
+        resp = session.get(url, headers=header, proxies=PROXY, timeout=TIMEOUT)
     except requests.exceptions.RequestException as e:
-        # logger.error(e)
+        logger.error(e)
         status = refresh_proxy(session)
         if status:
             logger.debug(f'REFRESHING PROXY: status - {status}')

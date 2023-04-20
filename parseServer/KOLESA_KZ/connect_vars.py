@@ -1,8 +1,7 @@
-import os
-PROXY = {'http': os.getenv('PROXY'),
-         'https': os.getenv('PROXY')}
+PROXY = {'http': 'http://JbHjQG:4OkkU7d24WiW@vo.mobileproxy.space:59083',
+         'https': 'http://JbHjQG:4OkkU7d24WiW@vo.mobileproxy.space:59083'}
 
-REFRESH_LINK = os.getenv('PROXY_REFRESH_LINK')
+REFRESH_LINK = 'https://mobileproxy.space/reload.html?proxy_key=49a8e8800a31a05c81c6a88006abe9fd'
 
 TIMEOUT = 5
 
