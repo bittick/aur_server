@@ -7,24 +7,30 @@ from loguru import logger
 from .connect_vars import PROXY, TIMEOUT, REFRESH_LINK, PAGE_LIMIT
 from concurrent.futures import ThreadPoolExecutor
 import threading
+
 refresh_mutex = threading.Lock()
+
+
+def proxy_request(session: requests.Session):
+    request_success = False
+    r = None
+    while not request_success:
+        try:
+            r = session.get(REFRESH_LINK, timeout=8)
+            return r.status_code
+        except requests.exceptions.Timeout:
+            time.sleep(3)
+            pass
+    return r
 
 
 def refresh_proxy(session: requests.Session):
     global refresh_mutex
     # Пытаемся захватить мьютекс
     if refresh_mutex.acquire(blocking=False):
-        refresh_link = REFRESH_LINK
         logger.debug('trying to refresh proxy')
-        try:
-            r = session.get(refresh_link, timeout=8)
-            return r.status_code
-        except requests.exceptions.Timeout:
-            refresh_proxy(session=session)
-            time.sleep(3)
-        finally:
-            # Освобождаем мьютекс через 10 секунд
-            threading.Timer(10, refresh_mutex.release).start()
+        proxy_request(session)
+        threading.Timer(10, refresh_mutex.release).start()
     else:
         # Мьютекс уже занят, ждем его освобождения
         time.sleep(3)
@@ -76,20 +82,23 @@ def pase_ads_links(mark: str, count: str | int, session: requests.Session, limit
 
 
 def get_one_ad(ad_link, session: requests.Session):
-    try:
-        url = f'http://kolesa.kz{ad_link}'
-        r = session.get(url, proxies=PROXY, timeout=TIMEOUT)
-        if r.status_code == 200:
-            logger.debug(f'{r.url} {r.status_code}')
-            return r.text
-        logger.warning(f'{r.url} {r.status_code}')
-        raise requests.exceptions.RequestException()
-    except requests.exceptions.RequestException as e:
-        # logger.error(e)
-        status = refresh_proxy(session)
-        if status:
-            logger.debug(f'REFRESHING PROXY: status - {status}')
-        return get_one_ad(ad_link, session)
+    request_success = False
+    r = None
+    while not request_success:
+        try:
+            url = f'http://kolesa.kz{ad_link}'
+            r = session.get(url, proxies=PROXY, timeout=TIMEOUT)
+            if r.status_code == 200:
+                request_success = True
+                logger.debug(f'{r.url} {r.status_code}')
+                return r.text
+            logger.warning(f'{r.url} {r.status_code}')
+            raise requests.exceptions.RequestException()
+        except requests.exceptions.RequestException as e:
+            status = refresh_proxy(session)
+            if status:
+                logger.debug(f'REFRESHING PROXY: status - {status}')
+    return r
 
 
 def parse_one_ad(args):

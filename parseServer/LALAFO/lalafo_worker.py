@@ -24,10 +24,14 @@ def parse_ids_from_page(json):
 
 
 async def parse_count(mark, session):
-    async with session.get(f'https://lalafo.kg/api/search/v3/feed/count?category_id={mark}', headers=HEADER) as resp:
-        if resp.status == 200:
-            data = await resp.json()
-            return int(data['ads_count'])
+    try:
+        async with session.get(f'https://lalafo.kg/api/search/v3/feed/count?category_id={mark}',
+                               headers=HEADER) as resp:
+            if resp.status == 200:
+                data = await resp.json()
+                return int(data['ads_count'])
+    except Exception as e:
+        logger.error(e)
 
 
 async def parse_ids(mark, session: aiohttp.ClientSession, pages=1):
@@ -76,17 +80,20 @@ async def parse_ads(ids, session: aiohttp.ClientSession):
 
 async def parse_mark(mark_id, mark_name):
     async with aiohttp.ClientSession() as session:
-        count = await parse_count(mark_id, session)
-        if not count:
-            pages = 0
-        else:
-            pages = count // 500 + 2 if count % 500 != 0 else count // 500 + 1
-        ids = await parse_ids(mark_id, session, pages)
-        raw_ads = await parse_ads(ids, session)
-        if raw_ads:
-            ads = []
-            for i in raw_ads:
-                parsed_data = parse_data_from_ad(i, mark_name)
-                if parsed_data:
-                    ads.append(parsed_data)
-            return ads
+        try:
+            count = await parse_count(mark_id, session)
+            if not count:
+                pages = 0
+            else:
+                pages = count // 500 + 2 if count % 500 != 0 else count // 500 + 1
+            ids = await parse_ids(mark_id, session, pages)
+            raw_ads = await parse_ads(ids, session)
+            if raw_ads:
+                ads = []
+                for i in raw_ads:
+                    parsed_data = parse_data_from_ad(i, mark_name)
+                    if parsed_data:
+                        ads.append(parsed_data)
+                return ads
+        finally:
+            await session.close()

@@ -44,16 +44,19 @@ async def parse_description(url, session: aiohttp.ClientSession):
 
 async def parse_mark(mark_id, mark_name):
     async with aiohttp.ClientSession() as session:
-        ads_data = await parse_pages(mark_id, session)
-        ads_data = [parse_ad(i, mark_name) for i in ads_data]
-        # if ads_data:
-        #     urls = [i['link'] for i in ads_data]
-        # logger.debug(f'ads count: {len(urls)}')
-        tasks = []
-        # for url in urls:
-        #     tasks.append(asyncio.ensure_future(
-        #         parse_description(url, session)))
-        # description_data = await asyncio.gather(*tasks)
-        # for index, description in enumerate(description_data):
-        #     ads_data[index]['description'] = description
-        return ads_data
+        try:
+            ads_data = await parse_pages(mark_id, session)
+            ads_data = [parse_ad(i, mark_name) for i in ads_data]
+            # if ads_data:
+            #     urls = [i['link'] for i in ads_data]
+            # logger.debug(f'ads count: {len(urls)}')
+            tasks = []
+            # for url in urls:
+            #     tasks.append(asyncio.ensure_future(
+            #         parse_description(url, session)))
+            # description_data = await asyncio.gather(*tasks)
+            # for index, description in enumerate(description_data):
+            #     ads_data[index]['description'] = description
+            return ads_data
+        finally:
+            await session.close()
