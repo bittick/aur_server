@@ -47,3 +47,5 @@ def parse_mark(mark_id: int | str, session: cloudscraper.CloudScraper) -> list[d
         with ThreadPoolExecutor(max_workers=10) as executor:
             res = executor.map(parse_one_ad_link, args)
             return list(res)
+    else:
+        return []

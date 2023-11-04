@@ -13,7 +13,7 @@ def list_am_main_cycle():
             start = time.time()
             results = parse_mark(mark_id, scraper_session)
             logger.info(
-                f'parsed: {mark_name}  time: {round(time.time() - start, 2)}  len:{len(results)}')
+                f'parsed: {mark_name}  time: {round(time.time() - start, 2)}  len:{len(results) if results else 0}')
             for i in results:
 
                 if i:

@@ -50,15 +50,15 @@ def kolesa_kz():
 def setup_periodic_tasks(sender: CeleryClass, **kwargs):
     # kufar.delay()
     # lalafo.delay()
-    # list_am.delay()
-    kolesa_kz.delay()
-    sender.add_periodic_task(
-        crontab(minute=1, hour='*/12'),
-        kolesa_kz.s(),
-        start_time=datetime.datetime.now(),
-        name='KOLESA.KZ',
+    list_am.delay()
+    # kolesa_kz.delay()
+    # sender.add_periodic_task(
+    #     crontab(minute=1, hour='*/12'),
+    #     kolesa_kz.s(),
+    #     start_time=datetime.datetime.now(),
+    #     name='KOLESA.KZ',
 
-    )
+    # )
     sender.add_periodic_task(
         crontab(minute=1, hour='*'),
         list_am.s(),
