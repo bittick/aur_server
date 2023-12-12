@@ -16,26 +16,21 @@ class CarAdPagination(PageNumberPagination):
         if final <= 8:
             return list(range(1, final + 1))
 
-        # Check for gap between 1 and the rest of the sequence
         if current >= 6:
-            included = {1, None, current - 2, current - 1, current, current + 1, current + 2, current + 3, current + 4,
-                        final}
+            included = {1, current - 2, current - 1, current, current + 1, current + 2, current + 3, current + 4, final}
         else:
             included = {i for i in range(1, 9)}
             included.update([current + i for i in range(-2, 5) if 0 < current + i <= final])
             included.add(final)
 
-        # Now sort the page numbers and drop anything outside the limits.
-        included = [
-            idx for idx in sorted(included)
-            if 0 < idx <= final
-        ]
+        included = [idx for idx in sorted(included, key=lambda x: x if x is not None else float('inf')) if
+                    0 < idx <= final]
 
-        # Finally insert any `...` breaks
         if current > 3:
             included.insert(1, None)
         if current < final - 4:
             included.insert(len(included) - 1, None)
+
         return included
 
     def get_html_context(self):
