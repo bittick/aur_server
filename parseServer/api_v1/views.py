@@ -10,6 +10,14 @@ from rest_framework.response import Response
 
 
 class CarAdFilteredList(ListAPIView):
+
+    def get_queryset(self):
+        queryset = CarAd.objects.all()
+        queryset = queryset.exclude(price__isnull=True)
+        queryset = queryset.exclude(production_date__isnull=True)
+        queryset = queryset.exclude(mileage__isnull=True)
+        return queryset
+
     serializer_class = CarAdSerializer
     queryset = CarAd.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
