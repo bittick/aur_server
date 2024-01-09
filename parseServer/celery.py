@@ -72,7 +72,7 @@ def setup_periodic_tasks(sender: CeleryClass, **kwargs):
 
     # ______________________________________________________________________________________________________________
     sender.add_periodic_task(
-        crontab(hour='*/6'),
+        crontab(minute=1, hour='*/6'),
         clear_old_ads.s(),
         start_time=timezone.now(),
         name='Clear old ads',

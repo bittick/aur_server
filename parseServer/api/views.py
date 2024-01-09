@@ -7,6 +7,7 @@ from rest_framework import filters
 from .paginators import CarAdPagination
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from parseServer.tools.currency_tools import get_currency_usd_base
 
 
 class CarAdFilteredList(ListAPIView):
@@ -134,5 +135,13 @@ def get_field_lists(request, item):
     queryset = model.objects.all()
     return Response(
         [serializer(obj).data for obj in queryset],
+        status=200,
+    )
+
+
+@api_view(['GET'])
+def get_currency_list(request):
+    return Response(
+        get_currency_usd_base(),
         status=200,
     )

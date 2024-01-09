@@ -13,5 +13,7 @@ urlpatterns = [
     path('brand/', BrandList.as_view(), name='brand_list'),
     path('brand/<str:brand>/', ModelsByBrand.as_view()),
     # path('models/', AllModelsByBrand.as_view(), name='all_models_by_brand'),
+    path('currencies/', get_currency_list),
     path('<str:item>/', get_field_lists),
+
 ]
