@@ -32,7 +32,7 @@ def parse_one_ad_link(args: list[str | cloudscraper.CloudScraper]) -> dict | Non
     ad_url, session = args
     try:
         resp = session.get(f'https://www.list.am{ad_url}')
-        # logger.info(f'{resp.url}{resp.status_code}')
+        # logger.info(f'{resp.url} {resp.status_code}')
         ad_params = parse_one_ad(resp.content, resp.url)
     except Exception as e:
         logger.error(e)

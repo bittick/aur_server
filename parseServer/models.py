@@ -1,6 +1,6 @@
 from django.db import models
 from .models_exceptions import AdSetUpError
-from datetime import datetime
+from parseServer.tools.currency_tools import get_currency_data
 
 
 class Aggregator(models.Model):
@@ -100,8 +100,8 @@ class CarAd(models.Model):
     __fk_attrs = {'aggregator': Aggregator, 'brand': Brand, 'cars_engine': Engine,
                   'cars_gearbox': Gearbox, 'cars_type': CarType, 'cars_drive': CarDrive,
                   'condition': CarCondition, 'country': Country, 'color': Color}
-    __special_kf_attrs = {'model': CarModel, 'region': Region, 'area': Area}
-    __special_non_kf_attrs = {'price', }
+    __special_fk_attrs = {'model': CarModel, 'region': Region, 'area': Area}
+    __special_non_fk_attrs = {'price', }
     __optional_attributes = {'region', 'area', 'color', 'description', 'condition', 'engine_capacity', 'cars_drive',
                              'cars_type',
                              'cars_gearbox', 'mileage'}
@@ -157,15 +157,7 @@ class CarAd(models.Model):
                 self.__setup_price(*ags)
 
     def __setup_price(self, price_data: dict):
-        currency_data = {
-            'KGS': 0.011,
-            'USD': 1,
-            'BYN': 0.34,
-            'AMD': 0.0026,
-            'RUB': 0.013,
-            'EUR': 0.92,
-            'KZT': 0.0022,
-        }
+        currency_data = get_currency_data()
         currency = price_data.get('currency')
         amount = price_data.get('amount')
         if not currency or not amount:
@@ -247,7 +239,7 @@ class CarAd(models.Model):
 
     def _save_ad(self, ad_data):
         fk_fields = {key: ad_data.get(key) for key, value in self.__fk_attrs.items()}
-        special_fk_fields = {key: ad_data.get(key) for key, value in self.__special_kf_attrs.items()}
+        special_fk_fields = {key: ad_data.get(key) for key, value in self.__special_fk_attrs.items()}
         other_fields = {key: ad_data.get(key) for key in self.__other_attrs}
         for field, arg in fk_fields.items():
             self.__setup_fk_attr(field, arg)

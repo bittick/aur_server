@@ -124,9 +124,8 @@ def parse_one_ad(html: str | bytes, link: str) -> dict | None:
     params.update(**_switch_info(info))
     params['description'] = _parse_description(
         soup.find('div', {'itemprop': 'description'}))
-    galery = soup.findAll('script')
-
+    galery = str(soup.findAll('script'))
     images = list(map(lambda a: 'https:' + a, re.findall(
-        "(//s\.[^\"\s]+)", galery[-1].contents[0])))
+        "(//s\.[^\"\s]+)", galery)))
     params['images'] = images
     return params

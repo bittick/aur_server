@@ -1,7 +1,7 @@
 HEADER = {
     'authority': 'lalafo.kg',
     'method': 'GET',
-    'path': '/api_v1/search/v3/feed/search?expand=url&per-page=40&category_id=1585&q=Mercedes%20Benz%20Sprinter',
+    'path': '/api/search/v3/feed/search?expand=url&per-page=40&category_id=1585&q=Mercedes%20Benz%20Sprinter',
     'scheme': 'http',
     'accept': 'application/json, text/plain, */*',
     # 'accept-encoding':'gzip, deflate, br',

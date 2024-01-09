@@ -51,8 +51,8 @@ def parse_ad(ad, mark_name):
     res_params['ad_id'] = ad['ad_id']
     res_params['link'] = ad['ad_link']
     res_params['price'] = {
-        'amount': float(ad['price_usd']),
-        'currency': 'BYN',
+        'amount': float(ad['price_usd'])//100,
+        'currency': 'USD',
     }
     res_params['title'] = ad['subject']
     res_params['country'] = 'Беларусь'

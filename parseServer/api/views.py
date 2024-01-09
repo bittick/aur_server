@@ -1,8 +1,8 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from parseServer.models import *
-from parseServer.api_v1.serializers import *
-from parseServer.api_v1.filters import *
+from parseServer.api.serializers import *
+from parseServer.api.filters import *
 from rest_framework import filters
 from .paginators import CarAdPagination
 from rest_framework.decorators import api_view
