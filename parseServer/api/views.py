@@ -11,7 +11,6 @@ from parseServer.tools.currency_tools import get_currency_usd_base
 
 
 class CarAdFilteredList(ListAPIView):
-
     def get_queryset(self):
         queryset = CarAd.objects.all()
         queryset = queryset.exclude(price__isnull=True)
@@ -19,7 +18,7 @@ class CarAdFilteredList(ListAPIView):
         queryset = queryset.exclude(mileage__isnull=True)
         return queryset
 
-    serializer_class = CarAdSerializer
+    serializer_class = CarAdFilterSerializer
     queryset = CarAd.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     filterset_class = CarAdFilter

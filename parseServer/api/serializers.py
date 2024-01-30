@@ -8,6 +8,12 @@ class CarAdSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CarAdFilterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarAd
+        exclude = ('price_history', 'link')
+
+
 class CarModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarModel

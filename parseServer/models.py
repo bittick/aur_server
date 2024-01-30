@@ -1,7 +1,8 @@
 from django.db import models
 from .models_exceptions import AdSetUpError
 from parseServer.tools.currency_tools import get_currency_data
-
+from django.utils import timezone
+import copy
 
 class Aggregator(models.Model):
     name = models.CharField(primary_key=True, max_length=30)
@@ -139,6 +140,7 @@ class CarAd(models.Model):
     images = models.JSONField()
     edit_date = models.DateTimeField(auto_now=True)
     create_date = models.DateTimeField(auto_now_add=True)
+    price_history = models.JSONField(default={})
 
     @classmethod
     def _validate_fields(cls, ad_data: dict):
@@ -151,18 +153,25 @@ class CarAd(models.Model):
             setattr(self, k, v)
         self.save()
 
-    def __setup_non_fk_fields(self, field, *ags):
-        match field:
-            case 'price':
-                self.__setup_price(*ags)
+    # def __setup_non_fk_fields(self, field, *ags):
+    #     match field:
+    #         case 'price':
+    #             self.__setup_price(*ags)
 
     def __setup_price(self, price_data: dict):
+
         currency_data = get_currency_data()
         currency = price_data.get('currency')
+        print(f'saving {self.ad_id}', currency)
         amount = price_data.get('amount')
         if not currency or not amount:
             raise AdSetUpError('Not enough price data ')
-        self.price = int(round(currency_data.get(currency) * amount, 1))
+        price_usd = int(round(currency_data.get(currency) * amount, 1))
+        self.price = price_usd
+        price_dict = copy.copy(self.price_history)
+        price_dict[timezone.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f%z")] = price_usd
+        self.price_history = price_dict
+
 
     def __setup_fk_attr(self, field, arg):
         if not arg and field not in self.__optional_attributes:
@@ -231,11 +240,11 @@ class CarAd(models.Model):
 
         if not db_ad:
             db_ad = CarAd(ad_id=ad_data['ad_id'])
+            db_ad._save_ad(ad_data)
         else:
             db_ad = db_ad[0]
+            db_ad.__setup_price(ad_data.get('price'))
             db_ad.save()
-            return None
-        db_ad._save_ad(ad_data)
 
     def _save_ad(self, ad_data):
         fk_fields = {key: ad_data.get(key) for key, value in self.__fk_attrs.items()}
@@ -248,4 +257,5 @@ class CarAd(models.Model):
             self.__setup__special_kf_attrs(field, arg)
         self.__setup_other_attrs(**other_fields)
         self.save()
-        return self
+
+
