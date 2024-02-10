@@ -1,8 +1,10 @@
+import time
+
 import aiohttp
 import asyncio
 
 from aiohttp import ClientPayloadError
-
+from parseServer.proxy import proxy
 from .header import HEADER
 from loguru import logger
 from .lalafo_ads_tools import parse_data_from_ad
@@ -26,7 +28,7 @@ def parse_ids_from_page(json):
 async def parse_count(mark, session):
     try:
         async with session.get(f'https://lalafo.kg/api/search/v3/feed/count?category_id={mark}',
-                               headers=HEADER) as resp:
+                               headers=HEADER, proxy=proxy['https']) as resp:
             if resp.status == 200:
                 data = await resp.json()
                 return int(data['ads_count'])
@@ -50,7 +52,7 @@ async def parse_ids(mark, session: aiohttp.ClientSession, pages=1):
 async def parse_ids_from_one_page(mark, session: aiohttp.ClientSession, page=1):
     try:
         async with session.get('https://lalafo.kg/api/search/v3/feed/search', params=create_params(mark, page),
-                               headers=HEADER) as resp:
+                               headers=HEADER, proxy=proxy['https']) as resp:
             if resp.status == 200:
                 return parse_ids_from_page(await resp.json())
     except ClientPayloadError as e:
@@ -59,8 +61,8 @@ async def parse_ids_from_one_page(mark, session: aiohttp.ClientSession, page=1):
 
 async def parse_one_ad(session: aiohttp.ClientSession, ad_id):
     try:
-        async with session.get(f'https://lalafo.kg/api/search/v3/feed/details/{ad_id}?expand=url', headers=HEADER) \
-                as resp:
+        async with session.get(f'https://lalafo.kg/api/search/v3/feed/details/{ad_id}?expand=url',
+                               headers=HEADER, proxy=proxy['https']) as resp:
             if resp.status == 200:
                 data = await resp.json()
                 # logger.info(f'id:{id} status:{resp.status}')
@@ -70,11 +72,11 @@ async def parse_one_ad(session: aiohttp.ClientSession, ad_id):
 
 
 async def parse_ads(ids, session: aiohttp.ClientSession):
-    tasks = []
+    data = []
     for ad_id in ids:
-        tasks.append(asyncio.ensure_future(parse_one_ad(session, ad_id)))
-
-    data = await asyncio.gather(*tasks)
+        data.append(await(parse_one_ad(session, ad_id)))
+        await asyncio.sleep(1)
+    # data = await asyncio.gather(*tasks)
     return [i for i in data if i]
 
 

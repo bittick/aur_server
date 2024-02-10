@@ -162,7 +162,7 @@ class CarAd(models.Model):
 
         currency_data = get_currency_data()
         currency = price_data.get('currency')
-        print(f'saving {self.ad_id}', currency)
+        # print(f'saving {self.ad_id}', currency)
         amount = price_data.get('amount')
         if not currency or not amount:
             raise AdSetUpError('Not enough price data ')

@@ -2,7 +2,8 @@ from .list_am_ads_tools import parse_one_ad, parse_urls_from_page
 import cloudscraper
 from concurrent.futures import ThreadPoolExecutor
 from loguru import logger
-
+from parseServer.proxy import proxy
+import time
 
 def create_mark_link(mark_id: int | str, page: int | str = 1) -> str:
     if page == 1:
@@ -13,7 +14,7 @@ def create_mark_link(mark_id: int | str, page: int | str = 1) -> str:
 
 def get_ads_links(mark_id, session: cloudscraper.CloudScraper, limit=30) -> list[str] | None:
     try:
-        resp = session.get(url=create_mark_link(mark_id))
+        resp = session.get(url=create_mark_link(mark_id), proxies=proxy)
     except Exception as e:
         logger.error(e)
         return None
@@ -22,7 +23,7 @@ def get_ads_links(mark_id, session: cloudscraper.CloudScraper, limit=30) -> list
     while next_page and page_counter < limit:
         page_counter += 1
         new_url = create_mark_link(mark_id, page_counter)
-        resp = session.get(new_url)
+        resp = session.get(new_url, proxies=proxy)
         other_urls, next_page = parse_urls_from_page(resp.content)
         ads_urls += other_urls
     return ads_urls
@@ -31,8 +32,9 @@ def get_ads_links(mark_id, session: cloudscraper.CloudScraper, limit=30) -> list
 def parse_one_ad_link(args: list[str | cloudscraper.CloudScraper]) -> dict | None:
     ad_url, session = args
     try:
-        resp = session.get(f'https://www.list.am{ad_url}')
+        resp = session.get(f'https://www.list.am{ad_url}', proxies=proxy)
         # logger.info(f'{resp.url} {resp.status_code}')
+        time.sleep(1)
         ad_params = parse_one_ad(resp.content, resp.url)
     except Exception as e:
         logger.error(e)
@@ -44,7 +46,7 @@ def parse_mark(mark_id: int | str, session: cloudscraper.CloudScraper) -> list[d
     res = get_ads_links(mark_id, session, 10)
     if res:
         args = [(i, session) for i in res]
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=1) as executor:
             res = executor.map(parse_one_ad_link, args)
             return list(res)
     else:

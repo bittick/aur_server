@@ -1,5 +1,5 @@
-PROXY = {'http': 'http://JbHjQG:4OkkU7d24WiW@vo.mobileproxy.space:59083',
-         'https': 'http://JbHjQG:4OkkU7d24WiW@vo.mobileproxy.space:59083'}
+PROXY = {'http': 'http://NbewHb:xF7syr@185.200.170.18:9860',
+         'https': 'http://NbewHb:xF7syr@185.200.170.18:9860'}
 
 REFRESH_LINK = 'https://mobileproxy.space/reload.html?proxy_key=49a8e8800a31a05c81c6a88006abe9fd'
 
