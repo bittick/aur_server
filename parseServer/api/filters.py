@@ -4,10 +4,10 @@ from parseServer.models import CarAd, Area, Region, Brand
 
 class CarAdFilter(django_filters.FilterSet):
     aggregator = django_filters.CharFilter(lookup_expr='exact')
-    brand = django_filters.CharFilter(lookup_expr='exact')
+    brand = django_filters.CharFilter(method='filter_brand')
     price_min = django_filters.NumberFilter(field_name='price', lookup_expr='gte')
     price_max = django_filters.NumberFilter(field_name='price', lookup_expr='lte')
-    model = django_filters.CharFilter(method='filter_model')
+    model = django_filters.CharFilter(lookup_expr='exact')
     production_date_min = django_filters.NumberFilter(field_name='production_date', lookup_expr='gte')
     production_date_max = django_filters.NumberFilter(field_name='production_date', lookup_expr='lte')
     mileage_min = django_filters.NumberFilter(field_name='mileage', lookup_expr='gte')
@@ -26,10 +26,9 @@ class CarAdFilter(django_filters.FilterSet):
     create_date_min = django_filters.DateFilter(field_name='create_date', lookup_expr='gte')
     create_date_max = django_filters.DateFilter(field_name='create_date', lookup_expr='lte')
 
-    def filter_model(self, queryset, name, value):
-        models = value.split(',')  # Разделить строку на список моделей
-        return queryset.filter(model__in=models)
-
+    def filter_brand(self, queryset, name, value):
+        brands = value.split(',')  # Разделить строку на список моделей
+        return queryset.filter(brand__in=brands)
 
     class Meta:
         model = CarAd
