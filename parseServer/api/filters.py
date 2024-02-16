@@ -7,7 +7,7 @@ class CarAdFilter(django_filters.FilterSet):
     brand = django_filters.CharFilter(lookup_expr='exact')
     price_min = django_filters.NumberFilter(field_name='price', lookup_expr='gte')
     price_max = django_filters.NumberFilter(field_name='price', lookup_expr='lte')
-    model = django_filters.CharFilter(lookup_expr='exact')
+    model = django_filters.CharFilter(method='filter_model')
     production_date_min = django_filters.NumberFilter(field_name='production_date', lookup_expr='gte')
     production_date_max = django_filters.NumberFilter(field_name='production_date', lookup_expr='lte')
     mileage_min = django_filters.NumberFilter(field_name='mileage', lookup_expr='gte')
@@ -25,6 +25,11 @@ class CarAdFilter(django_filters.FilterSet):
     color = django_filters.CharFilter(lookup_expr='exact')
     create_date_min = django_filters.DateFilter(field_name='create_date', lookup_expr='gte')
     create_date_max = django_filters.DateFilter(field_name='create_date', lookup_expr='lte')
+
+    def filter_model(self, queryset, name, value):
+        models = value.split(',')  # Разделить строку на список моделей
+        return queryset.filter(model__in=models)
+
 
     class Meta:
         model = CarAd

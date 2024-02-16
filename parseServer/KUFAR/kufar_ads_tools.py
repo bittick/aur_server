@@ -1,7 +1,15 @@
 def __parce_ad_images(images):
-    return [
-        f'https://yams.kufar.by/api/v1/kufar-ads/images/{img["id"][:2]}/{img["id"]}.jpg?rule=gallery' for img in images
-    ]
+    if not images:
+        return []
+    if images[0]['yams_storage']:
+        return [
+            f'https://yams.kufar.by/api/v1/kufar-ads/images/{img["id"][:2]}/{img["id"]}.jpg?rule=gallery' for img in
+            images
+        ]
+    else:
+        return [
+            f'https://rms7.kufar.by/v1/list_thumbs_2x/{img["path"]}' for img in images
+        ]
 
 
 def __parse_ad_parameters(ad_parameters, mark_name):
@@ -17,7 +25,7 @@ def __parse_ad_parameters(ad_parameters, mark_name):
                 res_params['production_date'] = value
             case 'Пробег, км':
                 res_params['mileage'] = param['v']
-            case 'Тип двигателя':   
+            case 'Тип двигателя':
                 res_params['cars_engine'] = value
             case 'Коробка передач':
                 res_params['cars_gearbox'] = value
@@ -51,7 +59,7 @@ def parse_ad(ad, mark_name):
     res_params['ad_id'] = ad['ad_id']
     res_params['link'] = ad['ad_link']
     res_params['price'] = {
-        'amount': float(ad['price_usd'])//100,
+        'amount': float(ad['price_usd']) // 100,
         'currency': 'USD',
     }
     res_params['title'] = ad['subject']
