@@ -1,2 +1,2 @@
-proxy = {'http': 'http://NbewHb:xF7syr@185.200.170.18:9860',
-         'https': 'http://NbewHb:xF7syr@185.200.170.18:9860'}
+proxy = {'http': 'http://root:aboba123@95.164.32.14:3128',
+         'https': 'http://root:aboba123@95.164.32.14:3128'}
